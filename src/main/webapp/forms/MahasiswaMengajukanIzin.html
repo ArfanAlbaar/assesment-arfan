@@ -1,0 +1,95 @@
+<form action="" onsubmit="return validateForm(event)">
+    <h3>Form IZIN</h3>
+
+    <label for="">Jenis Izin</label>
+    <div class="form-group">
+        <select cam-variable-name="category"
+                cam-variable-type="String">
+            <option>Keperluan Pribadi</option>
+            <option>Sakit</option>
+            <option>Lainnya</option>
+        </select>
+    </div>
+
+    <label for="">Tanggal Izin</label>
+    <div class="form-group">
+        <p class="input-group">
+            <input type="text"
+                   cam-variable-name="date"
+                   cam-variable-type="String"
+                   class="form-control"
+                   uib-datepicker-popup="yyyy-MM-dd'T'HH:mm:ss"
+                   is-open="dateFieldOpened" />
+            <span class="input-group-btn">
+            <button type="button"
+                    class="btn btn-default"
+                    ng-click="open($event)">
+              <i class="glyphicon glyphicon-calendar"></i>
+            </button>
+             </span>
+        </p>
+        <small id="tanggalIzinError" class="text-danger" style="display:none;">
+            Tanggal izin tidak boleh kurang dari hari ini.
+        </small>
+    </div>
+
+    <label for="">Deskripsi Izin</label>
+    <div class="form-group">
+        <textarea cam-variable-name="description"
+                  cam-variable-type="String">
+</textarea>
+    </div>
+
+    <label for="">Bukti Pendukung Izin</label>
+    <div class="form-group">
+        <input type="file"
+               cam-variable-name="evidence"
+               cam-variable-type="File"
+               cam-max-filesize="10000000"/>
+        <small id="buktiPendukungError" class="text-danger" style="display:none;">
+            Bukti pendukung izin harus diupload.
+        </small>
+    </div>
+
+
+    <script cam-script type="text/form-script">
+        $scope.open = function($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.dateFieldOpened = true;
+        };
+
+        $scope.validateForm = function($event) {
+            var isValid = true;
+
+            // Tanggal Izin Validation
+            var today = new Date();
+            today.setHours(0, 0, 0, 0); // Remove time part for date comparison
+            var tanggalIzin = new Date(document.getElementById('tanggalIzin').value);
+            var tanggalIzinError = document.getElementById('tanggalIzinError');
+
+            if (tanggalIzin < today) {
+                isValid = false;
+                tanggalIzinError.style.display = 'block';
+            } else {
+                tanggalIzinError.style.display = 'none';
+            }
+
+            // Bukti Pendukung Validation
+            var buktiPendukung = document.getElementById('buktiPendukung').files.length;
+            var buktiPendukungError = document.getElementById('buktiPendukungError');
+
+            if (buktiPendukung === 0) {
+                isValid = false;
+                buktiPendukungError.style.display = 'block';
+            } else {
+                buktiPendukungError.style.display = 'none';
+            }
+
+            // Prevent form submission if invalid
+            if (!isValid) {
+                $event.preventDefault();
+            }
+        };
+    </script>
+</form>

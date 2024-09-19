@@ -1,0 +1,71 @@
+<form action="">
+  <h3>Form Izin Absensi Mahasiswa</h3>
+
+  <label for="">Jenis Izin</label>
+  <div class="form-group">
+    <select cam-variable-name="category"
+            cam-variable-type="String" disabled>
+      <option>Keperluan Pribadi</option>
+      <option>Sakit</option>
+      <option>Lainnya</option>
+    </select>
+  </div>
+
+  <label for="">Tanggal Izin</label>
+  <div class="form-group">
+
+    <p class="input-group">
+
+      <input type="text"
+             cam-variable-name="date"
+             cam-variable-type="String"
+             class="form-control"
+             uib-datepicker-popup="yyyy-MM-dd'T'HH:mm:ss"
+             is-open="dateFieldOpened" disabled/>
+
+      <span class="input-group-btn">
+            <button type="button"
+                    class="btn btn-default"
+                    ng-click="open($event)">
+              <i class="glyphicon glyphicon-calendar"></i>
+            </button>
+             </span>
+    </p>
+  </div>
+
+  <label for="">Deskripsi Izin</label>
+  <div class="form-group">
+        <textarea cam-variable-name="description"
+                  cam-variable-type="String" readonly>
+</textarea>
+  </div>
+  <div class="form-group">
+    <a cam-file-download="evidence"></a>
+  </div>
+
+  <div class="form-group">
+    <select cam-variable-name="isApproved"
+            cam-variable-type="String">
+      <label for="">Apakah pengajuan Izin disetujui?</label>
+      <option value="setuju">setuju</option>
+      <option value="tolak">tolak</option>
+    </select>
+  </div>
+
+  <label for="">Catatan</label>
+  <div class="form-group">
+    <textarea cam-variable-name="remark"
+              cam-variable-type="String">
+</textarea>
+  </div>
+
+
+  <script cam-script type="text/form-script">
+    $scope.open = function($event) {
+      $event.preventDefault();
+      $event.stopPropagation();
+
+      $scope.dateFieldOpened = true;
+    };
+  </script>
+</form>
